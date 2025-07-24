@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Maturity Assessment Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+        }
+        
+        .section-card {
+            border-left: 5px solid;
+        }
+
+        .dark-blue {
+            color: #1e3a8a;
+        }
+
+        .bg-dark-blue {
+            background-color: #1e3a8a;
+        }
+
+        .border-dark-blue {
+            border-color: #1e3a8a;
+        }
+        
+        .rating-bar {
+            display: flex;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #e2e8f0;
+            margin-top: 8px;
+        }
+        
+        .rating-segment {
+            flex: 1;
+            margin-right: 2px;
+        }
+        
+        .rating-segment:last-child {
+            margin-right: 0;
+        }
+        
+        .rating-labels {
+            display: flex;
+            width: 100%;
+            margin-top: 4px;
+            font-size: 10px;
+            color: #64748b;
+        }
+        
+        .rating-label {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .overall-rating-bar {
+            display: flex;
+            width: 100%;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #e2e8f0;
+            margin: 16px 0;
+        }
+        
+        .overall-rating-segment {
+            flex: 1;
+            margin-right: 3px;
+        }
+        
+        .overall-rating-segment:last-child {
+            margin-right: 0;
+        }
+        
+        .overall-rating-labels {
+            display: flex;
+            width: 100%;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .overall-rating-label {
+            flex: 1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-6 py-12 max-w-5xl">
+         <header class="bg-white shadow flex justify-between items-center px-6 py-4 fixed top-0 left-0 right-0 z-50">
+
+    <div class="flex items-center space-x-4">
+      <img src="logo.png" alt="Logo" class="h-5 w-auto object-contain" />
+      <!-- <h1 class="text-xl font-bold">Assess.AI</h1> -->
+    </div>
+    <div class="space-x-2">
+       <!-- <button onclick="downloadModel()" class="border px-4 py-2 text-sm rounded hover:bg-gray-100">Competency Model</button> -->
+      <!-- <button onclick="downloadPDF()" class="border px-4 py-2 text-sm rounded hover:bg-gray-100">Download as PDF</button>
+      <button class="bg-[#071D49] text-white px-4 py-2 text-sm rounded hover:bg-blue-700 disabled">Share Report</button> -->
+    </div>
+  </header>
+        <header class="my-8 text-center">
+            
+            <h1 class="text-4xl font-bold dark-blue mb-2">Alex Johnson</h1>
+            <p class="text-gray-500 text-lg">Senior Marketing Manager</p>
+            <p class="text-gray-400 mt-2 text-sm">Report generated: June 10, 2023</p>
+        </header>
+        
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-center">
+                    <div class="bg-blue-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Overall Score</h2>
+                        <p class="text-2xl font-bold dark-blue mt-1">Skilled</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-center">
+                    <div class="bg-green-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Strongest Area</h2>
+                        <p class="text-2xl font-bold text-green-600 mt-1">Digital Adoption</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow duration-300">
+                <div class="flex items-center">
+                    <div class="bg-amber-50 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Growth Area</h2>
+                        <p class="text-2xl font-bold text-amber-600 mt-1">Usage Behaviors</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Overall Digital Maturity Section -->
+        <section class="mb-12 bg-white rounded-xl shadow-md p-8">
+            <h2 class="text-2xl font-bold dark-blue mb-4">Overall Digital Maturity Level</h2>
+            
+            <div class="overall-rating-bar">
+                <div class="overall-rating-segment bg-blue-600"></div>
+                <div class="overall-rating-segment bg-blue-600"></div>
+                <div class="overall-rating-segment bg-gray-200"></div>
+                <div class="overall-rating-segment bg-gray-200"></div>
+            </div>
+            
+            <div class="overall-rating-labels mb-6">
+                <div class="overall-rating-label text-blue-600">Basic</div>
+                <div class="overall-rating-label text-blue-600">Skilled</div>
+                <div class="overall-rating-label text-gray-400">Advanced</div>
+                <div class="overall-rating-label text-gray-400">Expert</div>
+            </div>
+            
+            <div class="space-y-4 text-gray-600">
+                <p>Based on our assessment conversations, you demonstrate a <span class="font-medium">Skilled</span> level of digital maturity. You show notable strengths in Digital Adoption, particularly in Strategic Alignment and Trust. However, your Risk Tolerance remains at a Basic level, which may be limiting your innovation potential. In Digital Readiness, your Technical Proficiency is Advanced while your Digital Literacy could benefit from further development. Your Usage Behaviors show mixed results with strong Consistency & Frequency but only moderate Operational Integration.</p>
+                
+                <p>Improving your digital maturity is critical for enhancing customer experiences and driving business outcomes. Customers increasingly expect seamless digital interactions, and professionals with higher digital maturity can respond more effectively to these expectations. To progress, you should focus on developing a framework for controlled experimentation to improve Risk Tolerance, pursue targeted training for advanced digital concepts, and work on system integrations to create more seamless operational workflows that directly impact customer touchpoints.</p>
+            </div>
+        </section>
+        
+        <!-- Digital Adoption Section -->
+        <section class="mb-16">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold dark-blue">Digital Adoption</h2>
+                <p class="text-gray-500 mt-2">Assessment of how well digital tools and platforms have been integrated into daily operations.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Accordion 1 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Strategic Alignment</h3>
+                                <span class="text-sm font-medium text-blue-600">Advanced</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">How well digital initiatives align with and support the organization's strategic goals and objectives.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You demonstrate strong alignment between digital initiatives and strategic goals. You consistently select and implement digital tools with clear business outcomes in mind, and you effectively communicate how these tools support broader organizational objectives.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To reach expert level, you should focus on developing more sophisticated metrics to measure the impact of your digital initiatives on strategic objectives. Consider creating a dashboard that tracks key performance indicators directly tied to your strategic goals, and regularly review and refine your digital strategy based on these metrics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accordion 2 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Change Readiness</h3>
+                                <span class="text-sm font-medium text-blue-600">Skilled</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The ability to adapt to and embrace digital changes and transformations.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You show moderate readiness for change. While you personally recognize the need for digital transformation, you sometimes encounter resistance when implementing new digital approaches with your team. You adapt well to changes but could benefit from a more structured approach to managing digital transitions.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To advance your change readiness, consider implementing a more structured change management approach with clear communication and training plans. Develop a stakeholder analysis for digital initiatives to identify potential resistance points, and create targeted strategies to address concerns. Building a network of digital champions within your team can also help facilitate smoother transitions.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accordion 3 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Trust</h3>
+                                <span class="text-sm font-medium text-blue-600">Advanced</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The level of confidence and trust in digital systems, data security, and privacy practices.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You demonstrate a high level of trust in digital systems. You're confident in data security measures and privacy practices, and you effectively communicate these safeguards to stakeholders. You've established clear policies and maintain transparent communication about how data is used and protected.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To reach expert level, you should consider implementing more advanced security measures and staying current with emerging digital threats. Participate in regular training on cybersecurity best practices and data privacy regulations. Consider developing a more comprehensive data governance framework that addresses not just security but also data quality, accessibility, and ethical use considerations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accordion 4 (Moved from Digital Readiness) -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Risk Tolerance</h3>
+                                <span class="text-sm font-medium text-blue-600">Basic</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-blue-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The willingness to accept uncertainty and potential failure when implementing new digital initiatives.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You show a low tolerance for risk in digital initiatives. You have a strong preference for proven solutions and established technologies, with limited appetite for experimentation. This cautious approach is limiting your innovation potential and may be preventing you from discovering more effective digital solutions.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To improve your risk tolerance, consider implementing a framework for controlled experimentation that allows you to test new digital approaches in a limited, low-risk environment. Start with small-scale pilots before full implementation, and develop clear criteria for evaluating success. Create a "safe space" for testing innovative ideas where failure is viewed as a learning opportunity rather than a negative outcome. Document both successes and failures to build an organizational knowledge base.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Digital Readiness Section -->
+        <section class="mb-16">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold dark-blue">Digital Readiness</h2>
+                <p class="text-gray-500 mt-2">Evaluation of preparedness for digital transformation and ability to adapt to new technologies.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Accordion 1 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Technical Proficiency</h3>
+                                <span class="text-sm font-medium text-green-600">Advanced</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-green-600"></div>
+                                <div class="rating-segment bg-green-600"></div>
+                                <div class="rating-segment bg-green-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The level of technical skills and expertise to support digital initiatives.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You demonstrate strong technical proficiency with a solid understanding of digital systems and good technical capabilities. You can effectively use required digital tools and have a good grasp of how these systems work together. You're able to troubleshoot common technical issues and communicate effectively with IT specialists.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To reach expert level, you should focus on developing more specialized technical skills in emerging technologies like AI, machine learning, and advanced data analytics. Consider taking courses or certifications in these areas, and look for opportunities to apply these technologies to your work. Stay current with industry trends and technological advancements by following relevant publications and attending conferences or webinars.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accordion 2 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Digital Literacy</h3>
+                                <span class="text-sm font-medium text-green-600">Skilled</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-green-600"></div>
+                                <div class="rating-segment bg-green-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The understanding of digital concepts, terminology, and principles.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You demonstrate good digital literacy skills and can navigate common tools effectively. You understand basic digital concepts and can communicate about digital topics with reasonable clarity. However, you show a noticeable knowledge gap when it comes to more advanced digital concepts and emerging technologies.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To elevate your digital literacy to the advanced level, consider implementing a personal learning plan focused on emerging digital trends and concepts. Subscribe to digital transformation publications, join relevant professional groups, and participate in webinars or workshops. Create a personal digital knowledge base to document key concepts and terminology. Consider finding a mentor who is highly digitally literate to help guide your development in this area.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Usage Behaviors Section -->
+        <section class="mb-16">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold dark-blue">Usage Behaviors</h2>
+                <p class="text-gray-500 mt-2">Analysis of how digital tools are actually used within the organization.</p>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Accordion 1 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Operational Integration</h3>
+                                <span class="text-sm font-medium text-purple-600">Skilled</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-purple-600"></div>
+                                <div class="rating-segment bg-purple-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">How effectively digital tools are integrated into daily operations and workflows.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You have moderately integrated digital tools into your operational workflows. While your core processes utilize digital systems, you still rely on some manual handoffs and disconnected systems that create inefficiencies. Your digital tools often operate in silos rather than as an integrated ecosystem.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To improve your operational integration, focus on identifying workflow bottlenecks and implementing integrations between systems to create more seamless processes. Map your current workflows to identify manual handoffs and redundant data entry points. Explore API connections between your key systems or look for workflow automation tools that can bridge gaps. Consider implementing a process optimization project focused on one critical workflow to demonstrate the value of deeper integration.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accordion 2 -->
+                <div class="section-card border-dark-blue bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="accordion-header cursor-pointer p-6 flex justify-between items-center hover:bg-gray-50">
+                        <div class="w-full pr-8">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-medium dark-blue">Consistency & Frequency</h3>
+                                <span class="text-sm font-medium text-purple-600">Advanced</span>
+                            </div>
+                            <div class="rating-bar">
+                                <div class="rating-segment bg-purple-600"></div>
+                                <div class="rating-segment bg-purple-600"></div>
+                                <div class="rating-segment bg-purple-600"></div>
+                                <div class="rating-segment bg-gray-200"></div>
+                            </div>
+                            <div class="rating-labels">
+                                <div class="rating-label">Basic</div>
+                                <div class="rating-label">Skilled</div>
+                                <div class="rating-label">Advanced</div>
+                                <div class="rating-label">Expert</div>
+                            </div>
+                        </div>
+                        <svg class="accordion-arrow w-5 h-5 text-gray-400 transform transition-transform duration-200 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                    <div class="accordion-content bg-white p-0">
+                        <div class="p-6 border-t border-gray-100">
+                            <div class="mb-6">
+                                <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Definition:</h4>
+                                <p class="text-gray-600">The regularity and uniformity with which digital tools are used.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Overview:</h4>
+                                    <p class="text-gray-600">You demonstrate strong consistency in digital tool usage. You use core digital systems regularly and in standardized ways, creating good process reliability. Your usage patterns are well-established, and you access digital tools frequently as part of your daily routine.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-2 text-sm uppercase tracking-wider">Development Recommendations:</h4>
+                                    <p class="text-gray-600">To reach expert level, focus on establishing more sophisticated usage metrics and optimizing your experiences based on actual usage patterns. Consider implementing analytics to track your digital tool usage and identify opportunities for efficiency improvements. Look for ways to automate repetitive tasks within your digital workflows. Share your effective usage patterns with colleagues to promote best practices across your team.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        
+        <footer class="text-center text-gray-400 text-sm mt-16 pb-8">
+            <p>Digital Maturity Assessment Report | Confidential</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const arrow = this.querySelector('.accordion-arrow');
+                    
+                    // Toggle active class
+                    content.classList.toggle('active');
+                    
+                    // Rotate arrow
+                    if (content.classList.contains('active')) {
+                        arrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        arrow.style.transform = 'rotate(0)';
+                    }
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96434615566c4037',t:'MTc1MzM1ODYwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
